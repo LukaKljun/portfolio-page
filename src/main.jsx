@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 
@@ -371,6 +371,8 @@ function PathDetail({ selected }) {
 
 function App() {
   const [selectedId, setSelectedId] = useState(paths[0].id);
+  const [showMobilePaths, setShowMobilePaths] = useState(false);
+  const guideRef = useRef(null);
   const selected = useMemo(
     () => paths.find((path) => path.id === selectedId) ?? paths[0],
     [selectedId]
@@ -378,10 +380,43 @@ function App() {
 
   useReveal();
 
+  useEffect(() => {
+    const guide = guideRef.current;
+    if (!guide) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setShowMobilePaths(entry.isIntersecting);
+      },
+      { rootMargin: "-56px 0px -35% 0px", threshold: 0.01 }
+    );
+
+    observer.observe(guide);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <>
       <header className="site-header">
         <a href="#top">Luka Kljun</a>
+        <div
+          className={`mobile-top-paths ${showMobilePaths ? "is-visible" : ""}`}
+          aria-hidden={!showMobilePaths}
+          aria-label="Mobile qualification navigation"
+        >
+          <div className="mobile-path-scroll">
+            {paths.map((path) => (
+              <button
+                className={selected.id === path.id ? "is-active" : ""}
+                type="button"
+                key={path.id}
+                onClick={() => setSelectedId(path.id)}
+              >
+                {path.label}
+              </button>
+            ))}
+          </div>
+        </div>
         <a href="mailto:lukakljun5@gmail.com">Contact</a>
       </header>
 
@@ -412,7 +447,7 @@ function App() {
           ))}
         </section>
 
-        <section className="guide" aria-label="Qualification guide">
+        <section className="guide" aria-label="Qualification guide" ref={guideRef}>
           <aside className="chooser" data-reveal>
             <p className="label">Choose a path</p>
             <div className="path-list" role="tablist" aria-label="Qualification paths">
