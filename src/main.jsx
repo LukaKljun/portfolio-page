@@ -315,6 +315,60 @@ function useReveal() {
   }, []);
 }
 
+function PathDetail({ selected }) {
+  return (
+    <article className="path-detail" key={selected.id}>
+      <figure>
+        <img src={selected.image} alt="" />
+      </figure>
+      <div className="detail-copy">
+        <p className="label">{selected.label}</p>
+        <h2>{selected.headline}</h2>
+        <p>{selected.summary}</p>
+      </div>
+
+      <div className="proof-grid">
+        <section>
+          <p className="label">Proof</p>
+          <ul>
+            {selected.proof.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </section>
+
+        <section>
+          <p className="label">How I work</p>
+          <ol>
+            {selected.route.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ol>
+        </section>
+      </div>
+
+      <section className="evidence-board">
+        <p className="label">Actual evidence</p>
+        <div>
+          {selected.evidence.map(([title, meta, text]) => (
+            <article key={`${selected.id}-${title}-${meta}`}>
+              <span>{meta}</span>
+              <strong>{title}</strong>
+              <p>{text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <div className="tool-row" aria-label={`${selected.label} tools`}>
+        {selected.tools.map((tool) => (
+          <span key={tool}>{tool}</span>
+        ))}
+      </div>
+    </article>
+  );
+}
+
 function App() {
   const [selectedId, setSelectedId] = useState(paths[0].id);
   const selected = useMemo(
@@ -378,62 +432,14 @@ function App() {
             </div>
           </aside>
 
-          <article className="path-detail" key={selected.id}>
-            <figure>
-              <img src={selected.image} alt="" />
-            </figure>
-            <div className="detail-copy">
-              <p className="label">{selected.label}</p>
-              <h2>{selected.headline}</h2>
-              <p>{selected.summary}</p>
-            </div>
-
-            <div className="proof-grid">
-              <section>
-                <p className="label">Proof</p>
-                <ul>
-                  {selected.proof.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ul>
-              </section>
-
-              <section>
-                <p className="label">How I work</p>
-                <ol>
-                  {selected.route.map((item) => (
-                    <li key={item}>{item}</li>
-                  ))}
-                </ol>
-              </section>
-            </div>
-
-            <section className="evidence-board">
-              <p className="label">Actual evidence</p>
-              <div>
-                {selected.evidence.map(([title, meta, text]) => (
-                  <article key={`${selected.id}-${title}-${meta}`}>
-                    <span>{meta}</span>
-                    <strong>{title}</strong>
-                    <p>{text}</p>
-                  </article>
-                ))}
-              </div>
-            </section>
-
-            <div className="tool-row" aria-label={`${selected.label} tools`}>
-              {selected.tools.map((tool) => (
-                <span key={tool}>{tool}</span>
-              ))}
-            </div>
-          </article>
+          <PathDetail selected={selected} />
         </section>
 
         <section className="all-round" data-reveal>
           <p className="label">Full profile</p>
           <h2>
-            The useful part is the combination: technical enough to build, social
-            enough to explain, organized enough to lead, curious enough to keep growing.
+            The useful part is the combination: technical to build, social to explain,
+            organized to lead, curious to keep growing.
           </h2>
         </section>
 
