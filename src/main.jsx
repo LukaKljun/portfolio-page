@@ -373,6 +373,7 @@ function App() {
   const [selectedId, setSelectedId] = useState(paths[0].id);
   const [showMobilePaths, setShowMobilePaths] = useState(false);
   const guideRef = useRef(null);
+  const chooserRef = useRef(null);
   const selected = useMemo(
     () => paths.find((path) => path.id === selectedId) ?? paths[0],
     [selectedId]
@@ -382,17 +383,37 @@ function App() {
 
   useEffect(() => {
     const guide = guideRef.current;
-    if (!guide) return;
+    const chooser = chooserRef.current;
+    if (!guide || !chooser) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setShowMobilePaths(entry.isIntersecting);
-      },
-      { rootMargin: "-56px 0px -35% 0px", threshold: 0.01 }
-    );
+    let frame = 0;
+    const updateMobilePaths = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        if (!window.matchMedia("(max-width: 640px)").matches) {
+          setShowMobilePaths(false);
+          return;
+        }
 
-    observer.observe(guide);
-    return () => observer.disconnect();
+        const guideBox = guide.getBoundingClientRect();
+        const chooserBox = chooser.getBoundingClientRect();
+        const headerLine = 58;
+        const inGuide = guideBox.top <= headerLine && guideBox.bottom > headerLine;
+        const chooserHasHandedOff = chooserBox.bottom <= headerLine + 8;
+
+        setShowMobilePaths(inGuide && chooserHasHandedOff);
+      });
+    };
+
+    updateMobilePaths();
+    window.addEventListener("scroll", updateMobilePaths, { passive: true });
+    window.addEventListener("resize", updateMobilePaths);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", updateMobilePaths);
+      window.removeEventListener("resize", updateMobilePaths);
+    };
   }, []);
 
   return (
@@ -410,6 +431,7 @@ function App() {
                 className={selected.id === path.id ? "is-active" : ""}
                 type="button"
                 key={path.id}
+                tabIndex={showMobilePaths ? 0 : -1}
                 onClick={() => setSelectedId(path.id)}
               >
                 {path.label}
@@ -448,7 +470,11 @@ function App() {
         </section>
 
         <section className="guide" aria-label="Qualification guide" ref={guideRef}>
-          <aside className="chooser" data-reveal>
+          <aside
+            className={`chooser ${showMobilePaths ? "is-handoff" : ""}`}
+            data-reveal
+            ref={chooserRef}
+          >
             <p className="label">Choose a path</p>
             <div className="path-list" role="tablist" aria-label="Qualification paths">
               {paths.map((path) => (
