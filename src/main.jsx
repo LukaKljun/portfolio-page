@@ -508,9 +508,36 @@ function App() {
 
         <section className="all-round" data-reveal>
           <p className="label">Full profile</p>
-          <h2>
-            The useful part is the combination: technical to build, social to explain,
-            organized to lead, curious to keep growing.
+          <h2 className="profile-statement">
+            {[
+              "The",
+              "useful",
+              "part",
+              "is",
+              "the",
+              "combination:",
+              "technical",
+              "to",
+              "build,",
+              "social",
+              "to",
+              "explain,",
+              "organized",
+              "to",
+              "lead,",
+              "curious",
+              "to",
+              "keep",
+              "growing.",
+            ].map((word, index) => (
+              <span
+                className={index === 5 || index === 6 || index === 9 || index === 12 || index === 15 ? "is-key" : ""}
+                key={`${word}-${index}`}
+                style={{ "--word-index": index }}
+              >
+                {word}
+              </span>
+            ))}
           </h2>
         </section>
 

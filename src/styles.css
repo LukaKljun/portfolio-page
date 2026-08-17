@@ -364,6 +364,61 @@ li::marker {
   letter-spacing: 0;
 }
 
+.profile-statement {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 0.18em;
+  row-gap: 0.02em;
+}
+
+.profile-statement span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.46em) rotateX(48deg);
+  transform-origin: left bottom;
+}
+
+.profile-statement .is-key {
+  position: relative;
+  color: #070707;
+}
+
+.profile-statement .is-key::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -0.04em;
+  right: -0.04em;
+  bottom: 0.02em;
+  height: 0.22em;
+  background: rgba(29, 78, 216, 0.14);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.all-round.is-visible .profile-statement span {
+  animation: profile-word-in 760ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: calc(var(--word-index) * 52ms);
+}
+
+.all-round.is-visible .profile-statement .is-key::after {
+  animation: profile-mark-in 620ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: calc(360ms + var(--word-index) * 52ms);
+}
+
+@keyframes profile-word-in {
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+  }
+}
+
+@keyframes profile-mark-in {
+  to {
+    transform: scaleX(1);
+  }
+}
+
 .contact {
   min-height: 76svh;
   display: grid;
@@ -409,6 +464,16 @@ address a:hover {
   *::after {
     scroll-behavior: auto !important;
     transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+  }
+
+  .profile-statement span {
+    opacity: 1;
+    transform: none;
+  }
+
+  .profile-statement .is-key::after {
+    transform: scaleX(1);
   }
 }
 
