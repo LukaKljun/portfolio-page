@@ -397,13 +397,13 @@ li::marker {
 }
 
 .all-round.is-visible .profile-statement span {
-  animation: profile-word-in 760ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  animation-delay: calc(var(--word-index) * 52ms);
+  animation: profile-word-in 1700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: calc(var(--word-index) * 190ms);
 }
 
 .all-round.is-visible .profile-statement .is-key::after {
-  animation: profile-mark-in 620ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  animation-delay: calc(360ms + var(--word-index) * 52ms);
+  animation: profile-mark-in 1400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: calc(1100ms + var(--word-index) * 190ms);
 }
 
 @keyframes profile-word-in {
