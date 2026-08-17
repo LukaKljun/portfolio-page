@@ -248,6 +248,7 @@ img {
 }
 
 .detail-copy h2 {
+  scroll-margin-top: 92px;
   max-width: 820px;
   margin: 0;
   font-size: clamp(3rem, 7.5vw, 9.2rem);
@@ -462,17 +463,21 @@ address a:hover {
     flex: none;
     min-width: 0;
     display: block;
-    padding: 10px 18px;
+    padding: 9px 14px;
     max-width: none;
     opacity: 0;
     transform: translateY(18px) scale(0.97);
     transform-origin: center bottom;
     overflow: hidden;
-    background: rgba(5, 5, 5, 0.86);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 999px;
-    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.26);
-    backdrop-filter: blur(18px);
+    background:
+      linear-gradient(90deg, rgba(247, 248, 250, 0.86), rgba(255, 255, 255, 0.72)),
+      rgba(247, 248, 250, 0.74);
+    border: 1px solid rgba(7, 7, 7, 0.14);
+    border-radius: 2px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.72),
+      0 18px 50px rgba(7, 7, 7, 0.18);
+    backdrop-filter: blur(18px) saturate(1.12);
     pointer-events: none;
     transition:
       opacity 180ms ease,
@@ -487,28 +492,22 @@ address a:hover {
 
   .mobile-top-paths::before,
   .mobile-top-paths::after {
-    content: "";
-    position: absolute;
-    z-index: 2;
-    top: 0;
-    bottom: 0;
-    width: 22px;
-    pointer-events: none;
+    display: none;
   }
 
   .mobile-top-paths::before {
     left: 0;
-    background: linear-gradient(90deg, rgba(5, 5, 5, 0.95), transparent);
+    background: #050505;
   }
 
   .mobile-top-paths::after {
     right: 0;
-    background: linear-gradient(270deg, rgba(5, 5, 5, 0.95), transparent);
+    background: #050505;
   }
 
   .mobile-path-scroll {
     display: flex;
-    gap: 7px;
+    gap: 8px;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
     scroll-snap-type: x proximity;
@@ -522,8 +521,7 @@ address a:hover {
   .mobile-path-scroll::before,
   .mobile-path-scroll::after {
     flex: 0 0 auto;
-    color: #fff;
-    opacity: 0.58;
+    color: #646a73;
     font-size: 0.88rem;
     line-height: 30px;
   }
@@ -538,21 +536,22 @@ address a:hover {
 
   .mobile-path-scroll button {
     flex: 0 0 auto;
-    min-height: 32px;
-    border: 1px solid rgba(255, 255, 255, 0.42);
-    border-radius: 999px;
-    background: transparent;
-    padding: 7px 11px;
-    color: #fff;
+    min-height: 34px;
+    border: 1px solid rgba(7, 7, 7, 0.14);
+    border-radius: 2px;
+    background: #fff;
+    padding: 8px 12px;
+    color: #070707;
     font-size: 0.76rem;
+    font-weight: 760;
     white-space: nowrap;
     scroll-snap-align: center;
   }
 
   .mobile-path-scroll button.is-active {
-    background: #fff;
-    color: #000;
-    border-color: #fff;
+    background: rgba(29, 78, 216, 0.1);
+    color: #1d4ed8;
+    border-color: #1d4ed8;
   }
 
   .hero,
@@ -582,27 +581,12 @@ address a:hover {
   }
 
   .guide {
-    padding-top: 96px;
-    gap: 34px;
+    padding-top: 72px;
+    gap: 0;
   }
 
   .chooser {
-    position: relative;
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    padding: 20px 16px 18px;
-    color: #fff;
-    background: #050505;
-    border-top: 1px solid rgba(255, 255, 255, 0.18);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.18);
-    clip-path: polygon(0 10px, 100% 0, 100% calc(100% - 10px), 0 100%);
-    transform-origin: center top;
-    transition:
-      opacity 180ms ease,
-      transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
-      filter 180ms ease;
+    display: none;
   }
 
   .chooser.is-handoff {

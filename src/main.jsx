@@ -315,7 +315,7 @@ function useReveal() {
   }, []);
 }
 
-function PathDetail({ selected }) {
+function PathDetail({ selected, titleRef }) {
   return (
     <article className="path-detail" key={selected.id}>
       <figure>
@@ -323,7 +323,7 @@ function PathDetail({ selected }) {
       </figure>
       <div className="detail-copy">
         <p className="label">{selected.label}</p>
-        <h2>{selected.headline}</h2>
+        <h2 ref={titleRef}>{selected.headline}</h2>
         <p>{selected.summary}</p>
       </div>
 
@@ -374,6 +374,7 @@ function App() {
   const [showMobilePaths, setShowMobilePaths] = useState(false);
   const guideRef = useRef(null);
   const chooserRef = useRef(null);
+  const titleRef = useRef(null);
   const selected = useMemo(
     () => paths.find((path) => path.id === selectedId) ?? paths[0],
     [selectedId]
@@ -383,8 +384,7 @@ function App() {
 
   useEffect(() => {
     const guide = guideRef.current;
-    const chooser = chooserRef.current;
-    if (!guide || !chooser) return;
+    if (!guide) return;
 
     let frame = 0;
     const updateMobilePaths = () => {
@@ -396,12 +396,10 @@ function App() {
         }
 
         const guideBox = guide.getBoundingClientRect();
-        const chooserBox = chooser.getBoundingClientRect();
         const headerLine = 58;
         const inGuide = guideBox.top <= headerLine && guideBox.bottom > headerLine;
-        const chooserHasHandedOff = chooserBox.bottom <= headerLine + 8;
 
-        setShowMobilePaths(inGuide && chooserHasHandedOff);
+        setShowMobilePaths(inGuide);
       });
     };
 
@@ -416,31 +414,43 @@ function App() {
     };
   }, []);
 
+  const handlePathSelect = (pathId) => {
+    setSelectedId(pathId);
+
+    window.requestAnimationFrame(() => {
+      titleRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  };
+
   return (
     <>
       <header className="site-header">
         <a href="#top">Luka Kljun</a>
-        <div
-          className={`mobile-top-paths ${showMobilePaths ? "is-visible" : ""}`}
-          aria-hidden={!showMobilePaths}
-          aria-label="Mobile qualification navigation"
-        >
-          <div className="mobile-path-scroll">
-            {paths.map((path) => (
-              <button
-                className={selected.id === path.id ? "is-active" : ""}
-                type="button"
-                key={path.id}
-                tabIndex={showMobilePaths ? 0 : -1}
-                onClick={() => setSelectedId(path.id)}
-              >
-                {path.label}
-              </button>
-            ))}
-          </div>
-        </div>
         <a href="mailto:lukakljun5@gmail.com">Contact</a>
       </header>
+
+      <nav
+        className={`mobile-top-paths ${showMobilePaths ? "is-visible" : ""}`}
+        aria-hidden={!showMobilePaths}
+        aria-label="Mobile qualification navigation"
+      >
+        <div className="mobile-path-scroll">
+          {paths.map((path) => (
+            <button
+              className={selected.id === path.id ? "is-active" : ""}
+              type="button"
+              key={path.id}
+              tabIndex={showMobilePaths ? 0 : -1}
+              onClick={() => handlePathSelect(path.id)}
+            >
+              {path.label}
+            </button>
+          ))}
+        </div>
+      </nav>
 
       <main id="top">
         <section className="hero">
@@ -484,7 +494,7 @@ function App() {
                   role="tab"
                   aria-selected={selected.id === path.id}
                   key={path.id}
-                  onClick={() => setSelectedId(path.id)}
+                  onClick={() => handlePathSelect(path.id)}
                 >
                   <span>{path.label}</span>
                   <small>{path.question}</small>
@@ -493,7 +503,7 @@ function App() {
             </div>
           </aside>
 
-          <PathDetail selected={selected} />
+          <PathDetail selected={selected} titleRef={titleRef} />
         </section>
 
         <section className="all-round" data-reveal>
