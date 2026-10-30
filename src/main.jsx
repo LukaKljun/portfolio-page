@@ -63,8 +63,8 @@ const paths = [
     ],
     evidence: [
       ["Wise Technologies", "2024 - now", "Worked across ideation, architecture, feature design, UX, and launch."],
-      ["Business Week", "1st place", "Won by combining business thinking, presentation, and execution."],
-      ["NASA Space Apps", "winner", "Turned a concept into a clear project under time pressure."],
+      ["Business Week", "1st place", "Placed first among the student teams."],
+      ["NASA Space Apps", "winner", "Won with the Space Farmers team project."],
     ],
     tools: ["Product thinking", "UX/UI", "User flows", "Feature design", "Prioritization"],
     route: ["Find the need", "Shape the feature", "Make it simple", "Ship something useful"],
@@ -84,9 +84,9 @@ const paths = [
       "Built software + hardware projects including BeeSmart and sensor monitoring work",
     ],
     evidence: [
-      ["VegaSAT", "CanSat 2024", "National 2nd place project involving embedded systems and telemetry."],
+      ["VegaSAT", "CanSat 2024", "The team placed second in CanSat Slovenia."],
       ["Vegova", "2024 - 2025", "Led Arduino and ESP32 workshops with hands-on hardware projects."],
-      ["BeeSmart", "2025", "Software + hardware project listed in my selected projects."],
+      ["BeeSmart", "2025", "Project listed in my CV."],
     ],
     tools: ["C++", "Arduino", "ESP32", "Raspberry Pi", "Sensors"],
     route: ["Wire the prototype", "Read the signal", "Debug the system", "Explain the result"],
@@ -188,14 +188,14 @@ const paths = [
       "Presenting, teaching, competitions, and organizing taught me to make ideas clear without making them smaller.",
     image: "/assets/generated/mobile-desk.webp",
     proof: [
-      "Presented competition projects under time pressure",
       "Strengthened communication through teaching and workshops",
       "English and German, with experience explaining technical ideas simply",
-      "Worked with both technical and non-technical people",
+      "Explained C++ fundamentals and helped students troubleshoot their code",
+      "Coordinated people as an organizer of Ribniski pasijon",
     ],
     evidence: [
       ["Python + embedded teaching", "2024 - 2025", "Explained technical ideas to students with different starting levels."],
-      ["NASA Space Apps", "2024", "Presented a project clearly enough to win."],
+      ["NASA Space Apps", "2024", "Winner with the Space Farmers team."],
       ["Ribniski pasijon", "2025", "Communication across a large group where clarity mattered."],
     ],
     tools: ["Presentations", "English", "German", "Listening", "Storytelling"],
@@ -216,8 +216,8 @@ const paths = [
       "Comfortable explaining projects, tradeoffs, and results",
     ],
     evidence: [
-      ["Business Week", "1st place", "Presented and executed better than the other student teams."],
-      ["NASA Space Apps", "winner", "Built and communicated a project in a competitive setting."],
+      ["Business Week", "1st place", "Placed first among the student teams."],
+      ["NASA Space Apps", "winner", "Won with the Space Farmers team project."],
       ["Instructor work", "Vegova", "Prepared live explanations, demos, and learning material."],
     ],
     tools: ["Presentations", "Storytelling", "Demos", "Clarity", "Confidence"],
@@ -283,7 +283,7 @@ const paths = [
     ],
     evidence: [
       ["Space Farmers", "NASA Space Apps", "Creative competition project with a real-world problem-solving angle."],
-      ["Business Week", "1st place", "Combined idea, business logic, and presentation."],
+      ["Business Week", "1st place", "Placed first among the student teams."],
       ["Mobile app work", "Wise Technologies", "UX optimization and feature design in production app work."],
     ],
     tools: ["UX/UI", "Ideation", "Prototyping", "Design thinking", "Taste"],
@@ -294,7 +294,7 @@ const paths = [
 const quickStats = [
   ["2024 - now", "Wise Technologies"],
   ["150+", "team members coordinated"],
-  ["1st", "NASA Space Apps + Business Week"],
+  ["Winner", "NASA Space Apps + Business Week"],
   ["2nd", "CanSat Slovenia"],
 ];
 
@@ -320,6 +320,7 @@ function PathDetail({ selected, titleRef }) {
     <article className="path-detail" key={selected.id}>
       <figure>
         <img src={selected.image} alt="" />
+        <figcaption>Illustrative image</figcaption>
       </figure>
       <div className="detail-copy">
         <p className="label">{selected.label}</p>
@@ -348,7 +349,7 @@ function PathDetail({ selected, titleRef }) {
       </div>
 
       <section className="evidence-board">
-        <p className="label">Actual evidence</p>
+        <p className="label">Relevant experience</p>
         <div>
           {selected.evidence.map(([title, meta, text]) => (
             <article key={`${selected.id}-${title}-${meta}`}>
@@ -455,18 +456,21 @@ function App() {
       <main id="top">
         <section className="hero">
           <div className="hero-copy" data-reveal>
-            <p className="label">Portfolio guide</p>
-            <h1>Choose what you want Luka to prove.</h1>
+            <p className="label">Ribnica, Slovenia / Portfolio</p>
+            <h1>Luka Kljun.</h1>
           </div>
           <div className="hero-side" data-reveal>
             <p>
-              I am not only a programmer. I build, teach, present, organize, learn
-              fast, and work across software and hardware.
+              I build digital products, teach technical skills, and bring people
+              together around ideas. I am a computer engineering student with
+              production mobile development experience.
             </p>
             <p>
-              Pick the qualification that matters for the job and the page will show
-              the strongest proof first.
+              My work spans React Native, embedded systems, presentations, and
+              coordinating teams. I am interested in learning how technology can
+              solve meaningful problems in different industries.
             </p>
+            <a className="hero-link" href="#experience">Explore my experience <span aria-hidden="true">&#8595;</span></a>
           </div>
         </section>
 
@@ -477,6 +481,18 @@ function App() {
               <span>{label}</span>
             </div>
           ))}
+        </section>
+
+        <section className="experience-overview" id="experience">
+          <div>
+            <p className="label">Experience at a glance</p>
+            <h2>From an idea to something people can use.</h2>
+          </div>
+          <div className="experience-rows">
+            <article><span>2024 - present</span><div><h3>Wise Technologies</h3><p>Led React Native app development, including architecture, new features, performance improvements, and production delivery.</p></div></article>
+            <article><span>2024 - 2025</span><div><h3>Vegova Ljubljana</h3><p>Taught Python and led embedded systems workshops, helping students work through practical projects and debugging.</p></div></article>
+            <article><span>2024 - 2025</span><div><h3>Projects and leadership</h3><p>NASA Space Apps winner with Space Farmers; second place at CanSat Slovenia with VegaSAT; coordinated 150+ team members for Ribniski pasijon.</p></div></article>
+          </div>
         </section>
 
         <section className="guide" aria-label="Qualification guide" ref={guideRef}>
